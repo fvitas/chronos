@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "electron": "^2.0.2",
+    "google-auth-library": "^1.6.1",
     "idb": "^2.1.2",
+    "lodash": "^4.17.10",
     "menubar": "^5.2.3",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "react-dropzone": "^4.2.11"
   },
   "devDependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -23,10 +26,12 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "electron-reload": "^1.2.2",
-    "parcel-bundler": "^1.9.0",
+    "parcel-bundler": "^1.9.2",
     "stylus": "^0.54.5"
   },
-  "browserslist": [ "chrome 61"],
+  "browserslist": [
+    "chrome 61"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fvitas/chronos.git"

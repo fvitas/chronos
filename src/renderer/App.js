@@ -1,23 +1,27 @@
 import React, { Component } from 'react'
+import Dropzone from 'react-dropzone'
+import _ from 'lodash'
 import './App.styl'
 import idb from 'idb'
 
 async function getUserCredentials() {
-    let db = await idb.open('user', 1)
+    let db = await idb.open('user', 1, upgradeDB => upgradeDB.createObjectStore('credentials', { keyPath: 'client_id' }))
 
     let tx = db.transaction('credentials', 'readonly')
     let store = tx.objectStore('credentials')
 
-    let allSavedItems = await store.get(33)
+    let credentials = await store.getAll()
+
+    return credentials[0]
 }
 
-async function putUserCredentials() {
-    let db = await idb.open('user', 1, upgradeDB => upgradeDB.createObjectStore('credentials', { keyPath : 'age' }))
+async function saveUserCredentials(credentials) {
+    let db = await idb.open('user', 1, upgradeDB => upgradeDB.createObjectStore('credentials', { keyPath: 'client_id' }))
 
     let tx = db.transaction('credentials', 'readwrite')
     let store = tx.objectStore('credentials')
 
-    await store.put({ firstname: 'John', lastname: 'Doe', age: 33 })
+    await store.put(credentials.installed)
 
     await tx.complete
     db.close()
@@ -25,15 +29,55 @@ async function putUserCredentials() {
 
 
 async function authenticate(cb) {
-    // let credentials = await getUserCredentials()
-    // console.log(credentials)
-
     setTimeout(cb, 1000)
 }
 
 class Protected extends Component {
     render() {
         return <div>this is protected</div>
+    }
+}
+
+class AuthClient extends Component {
+    state = {
+        fileRejected: false
+    }
+
+    onDrop = async (acceptedArray) => {
+        let file = acceptedArray[0]
+
+        if (_.isEmpty(acceptedArray) || !_.endsWith(file.name, 'json')) {
+            this.setState({ fileRejected: true })
+            return
+        }
+
+        this.setState({ fileRejected: false })
+
+        let fileContent = nodeRequire('fs').readFileSync(file.path)
+        let credentials = JSON.parse(fileContent)
+
+        await saveUserCredentials(credentials)
+        this.props.onClientActivation()
+    }
+
+    render() {
+        return (
+            <div className='App'>
+                <header className='App-header'>
+                    <h1 className='App-title'>Welcome to Chronos</h1>
+                </header>
+
+                <a className='configure-link' href='https://developers.google.com/identity/sign-in/web/sign-in#before_you_begin'>Configure a project</a>
+
+                <Dropzone className='Dropzone-container' accept='application/json, .json' multiple={false} onDrop={this.onDrop}>
+
+                    <p>Drop credentials.json here, or select file to upload.</p>
+
+                    { this.state.fileRejected && <p className='rejected-message'>Upload correct JSON file</p> }
+
+                </Dropzone>
+            </div>
+        )
     }
 }
 
@@ -56,8 +100,29 @@ class Login extends Component {
 }
 
 class App extends Component {
-    state = {
-        isAuthenticated: false
+    constructor() {
+        super()
+        this.state = {
+            isAuthenticated: this.isAuthenticated(),
+            isClientEnabled: this.isClientEnabled()
+        }
+    }
+
+    isClientEnabled () {
+        return false
+    }
+
+    isAuthenticated () {
+        return false
+    }
+
+    async componentWillMount () {
+        let isClientEnabled = !!await getUserCredentials()
+        this.setState({ isClientEnabled: isClientEnabled })
+    }
+
+    onClientActivation = () => {
+        this.setState({ isClientEnabled: true })
     }
 
     onLogin = () => {
@@ -67,8 +132,9 @@ class App extends Component {
     render() {
         return (
             do {
-                if (this.state.isAuthenticated) <Protected/>
-                else <Login onLogin={this.onLogin}/>
+                if (this.state.isClientEnabled && this.state.isAuthenticated) <Protected/>
+                else if (!this.state.isClientEnabled) <AuthClient onClientActivation={this.onClientActivation}/>
+                else if (!this.state.isAuthenticated) <Login onLogin={this.onLogin}/>
             }
         )
     }

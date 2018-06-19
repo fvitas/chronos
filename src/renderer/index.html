@@ -6,6 +6,13 @@
         <title>Calendar</title>
     </head>
     <body>
+        <script>
+            window.nodeRequire = require
+            delete window.require
+            delete window.exports
+            delete window.module
+        </script>
+
         <div id="app"></div>
         <script src="./index.js"></script>
     </body>

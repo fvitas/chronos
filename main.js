@@ -1,6 +1,6 @@
 const electron = require('electron')
 
-const { app, BrowserWindow } = electron
+const { app, BrowserWindow, shell } = electron
 
 const menubar = require('menubar')
 const path = require('path')
@@ -30,6 +30,19 @@ const mb = menubar({
     }
 })
 
-mb.on('ready', function ready () {
+function handleRedirect (event, url) {
+    if (url !== mb.window.webContents.getURL()) {
+        event.preventDefault()
+        shell.openExternal(url)
+    }
+}
 
+mb.on('after-show', () => {
+    mb.window.webContents.on('will-navigate', handleRedirect)
+    mb.window.webContents.on('new-window', handleRedirect)
+})
+
+mb.on('after-hide', () => {
+    mb.window.webContents.removeListener('will-navigate', handleRedirect)
+    mb.window.webContents.removeListener('new-window', handleRedirect)
 })

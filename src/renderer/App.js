@@ -67,7 +67,11 @@ class AuthClient extends Component {
                     <h1 className='App-title'>Welcome to Chronos</h1>
                 </header>
 
-                <a className='configure-link' href='https://developers.google.com/identity/sign-in/web/sign-in#before_you_begin'>Configure a project</a>
+                <ol className='instructions'>
+                    <li><a className='configure-link' href='https://developers.google.com/identity/sign-in/web/sign-in#before_you_begin'>Configure a project</a></li>
+                    <li>Create Credentials, create OAuth Client, choose "Other" as the application type</li>
+                    <li>Enable Google Calendar API</li>
+                </ol>
 
                 <Dropzone className='Dropzone-container' accept='application/json, .json' multiple={false} onDrop={this.onDrop}>
 

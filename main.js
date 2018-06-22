@@ -1,14 +1,9 @@
-const electron = require('electron')
 
-const { app, BrowserWindow, shell } = electron
+const { shell } = require('electron')
 
 const menubar = require('menubar')
 const path = require('path')
 const url = require('url')
-
-if (process.env.ELECTRON_START_URL) {
-    require('electron-reload')(__dirname)
-}
 
 const mb = menubar({
     alwaysOnTop: true,

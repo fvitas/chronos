@@ -2,39 +2,21 @@ import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
 import _ from 'lodash'
 import './App.styl'
-import idb from 'idb'
 
-async function getUserCredentials() {
-    let db = await idb.open('user', 1, upgradeDB => upgradeDB.createObjectStore('credentials', { keyPath: 'client_id' }))
+import { initDB, getUserCredentials, saveUserCredentials, saveTokens, getTokens } from './indexeddb/indexeddbApi'
+import { logInWithGoogle } from './auth/auth'
 
-    let tx = db.transaction('credentials', 'readonly')
-    let store = tx.objectStore('credentials')
-
-    let credentials = await store.getAll()
-
-    return credentials[0]
-}
-
-async function saveUserCredentials(credentials) {
-    let db = await idb.open('user', 1, upgradeDB => upgradeDB.createObjectStore('credentials', { keyPath: 'client_id' }))
-
-    let tx = db.transaction('credentials', 'readwrite')
-    let store = tx.objectStore('credentials')
-
-    await store.put(credentials.installed)
-
-    await tx.complete
-    db.close()
-}
-
-
-async function authenticate(cb) {
-    setTimeout(cb, 1000)
-}
+initDB()
 
 class Protected extends Component {
     render() {
-        return <div>this is protected</div>
+        return (
+            <div className='App'>
+                <header className='App-header'>
+                    <h1 className='App-title'>Protected view</h1>
+                </header>
+            </div>
+        )
     }
 }
 
@@ -87,7 +69,12 @@ class AuthClient extends Component {
 
 class Login extends Component {
     login = async () => {
-        await authenticate(this.props.onLogin)
+        let credentials = await getUserCredentials()
+        let tokens = await logInWithGoogle(credentials)
+
+        await saveTokens(tokens)
+
+        this.props.onLogin()
     }
 
     render() {
@@ -104,25 +91,25 @@ class Login extends Component {
 }
 
 class App extends Component {
-    constructor() {
-        super()
-        this.state = {
-            isAuthenticated: this.isAuthenticated(),
-            isClientEnabled: this.isClientEnabled()
+
+    state = {
+        isAuthenticated: false,
+        isClientEnabled: false,
+        pauseRender: true
+    }
+
+    async componentDidMount () {
+        let newState = {
+            isAuthenticated: !!await getTokens(),
+            isClientEnabled: !!await getUserCredentials(),
+            pauseRender: false
         }
+
+        this.setState(newState)
     }
 
-    isClientEnabled () {
-        return false
-    }
-
-    isAuthenticated () {
-        return false
-    }
-
-    async componentWillMount () {
-        let isClientEnabled = !!await getUserCredentials()
-        this.setState({ isClientEnabled: isClientEnabled })
+    shouldComponentUpdate(nextProps, nextState) {
+        return !nextState.pauseRender
     }
 
     onClientActivation = () => {
@@ -134,11 +121,13 @@ class App extends Component {
     }
 
     render() {
+        if (this.state.pauseRender) return null
+
         return (
             do {
-                if (this.state.isClientEnabled && this.state.isAuthenticated) <Protected/>
-                else if (!this.state.isClientEnabled) <AuthClient onClientActivation={this.onClientActivation}/>
-                else if (!this.state.isAuthenticated) <Login onLogin={this.onLogin}/>
+                if (!this.state.isClientEnabled)        <AuthClient onClientActivation={this.onClientActivation}/>
+                else if (!this.state.isAuthenticated)   <Login onLogin={this.onLogin}/>
+                else                                    <Protected/>
             }
         )
     }

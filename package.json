@@ -10,8 +10,9 @@
     "parcel:build": "parcel build ./src/renderer/index.html -d build/ --public-url ./"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "electron": "^2.0.2",
-    "google-auth-library": "^1.6.1",
+    "googleapis": "^32.0.0",
     "idb": "^2.1.2",
     "lodash": "^4.17.10",
     "menubar": "^5.2.3",

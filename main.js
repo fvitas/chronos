@@ -41,3 +41,7 @@ mb.on('after-hide', () => {
     mb.window.webContents.removeListener('will-navigate', handleRedirect)
     mb.window.webContents.removeListener('new-window', handleRedirect)
 })
+
+// mb.on('show', () => {
+//     mb.window.webContents.reloadIgnoringCache()
+// })

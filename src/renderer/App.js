@@ -4,17 +4,31 @@ import _ from 'lodash'
 import './App.styl'
 
 import { initDB, getUserCredentials, saveUserCredentials, saveTokens, getTokens } from './indexeddb/indexeddbApi'
-import { logInWithGoogle } from './auth/auth'
+import { initAuthClient, logInWithGoogle, getMeetings } from './google/googleApi'
 
-initDB()
+(async () => {
+    await initDB()
+
+    let credentials = await getUserCredentials()
+    await initAuthClient(credentials)
+})()
 
 class Protected extends Component {
+
+    getMeetings = async () => {
+        let tokens = await getTokens()
+        let meetings = await getMeetings(tokens)
+
+        console.log(meetings)
+    }
+
     render() {
         return (
             <div className='App'>
                 <header className='App-header'>
                     <h1 className='App-title'>Protected view</h1>
                 </header>
+                <button onClick={this.getMeetings}>get meetings</button>
             </div>
         )
     }

@@ -17,11 +17,7 @@ function initAuthClient(credentials) {
 
 function logInWithGoogle(credentials) {
 
-    authClient = new google.auth.OAuth2(
-        credentials.client_id,
-        credentials.client_secret,
-        credentials.redirect_uris[0]
-    )
+    initAuthClient(credentials)
 
     let authorizeUrl = authClient.generateAuthUrl({ access_type: 'offline', scope: 'https://www.googleapis.com/auth/calendar.readonly' })
 

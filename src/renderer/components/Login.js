@@ -26,4 +26,5 @@ class Login extends Component {
         )
     }
 }
+
 export { Login }

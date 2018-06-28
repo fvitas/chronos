@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import '../App.styl'
 
 import { getMeetings } from '../google/googleApi'
-import { getTokens } from '../indexeddb/indexeddbApi'
 
 class Calendar extends Component {
 
     getMeetings = async () => {
-        let tokens = await getTokens()
-        let meetings = await getMeetings(tokens)
+        let meetings = await getMeetings()
 
         console.log(meetings)
     }

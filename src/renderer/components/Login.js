@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import '../App.styl'
 
 import { getUserCredentials, saveTokens } from '../indexeddb/indexeddbApi'
-import { logInWithGoogle } from '../google/googleApi'
+import { logInWithGoogle, setAuthTokens } from '../google/googleApi'
 
 class Login extends Component {
     login = async () => {
         let credentials = await getUserCredentials()
         let tokens = await logInWithGoogle(credentials)
 
+        setAuthTokens(tokens)
         await saveTokens(tokens)
 
         this.props.onLogin()

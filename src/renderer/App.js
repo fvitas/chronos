@@ -5,13 +5,16 @@ import { Calendar } from './components/Calendar'
 import { Login } from './components/Login'
 
 import { initDB, getUserCredentials, getTokens } from './indexeddb/indexeddbApi'
-import { initAuthClient } from './google/googleApi'
+import { initAuthClient, setAuthTokens } from './google/googleApi'
 
 (async () => {
     await initDB()
 
     let credentials = await getUserCredentials()
-    await initAuthClient(credentials)
+    let tokens = await getTokens()
+
+    initAuthClient(credentials)
+    setAuthTokens(tokens)
 })()
 
 class App extends Component {

@@ -1,7 +1,6 @@
 
 const { remote } = nodeRequire('electron')
 const { google } = nodeRequire('googleapis')
-const { fromCallback } = nodeRequire('bluebird')
 
 let authClient
 
@@ -13,6 +12,12 @@ function initAuthClient(credentials) {
         credentials.client_secret,
         credentials.redirect_uris[0]
     )
+}
+
+function setAuthTokens(tokens) {
+    if (!authClient) return
+
+    authClient.setCredentials(tokens)
 }
 
 function logInWithGoogle(credentials) {
@@ -53,22 +58,18 @@ function logInWithGoogle(credentials) {
     })
 }
 
-async function getMeetings(tokens) {
-
-    authClient.setCredentials(tokens)
-
+async function getMeetings() {
     let calendar = google.calendar({ version: 'v3', auth: authClient })
-    let calendarOptions = {
+
+    let response = await calendar.events.list({
         calendarId: 'primary',
         timeMin: (new Date()).toISOString(),
         maxResults: 10,
         singleEvents: true,
         orderBy: 'startTime'
-    }
-
-    let response = await fromCallback(cb => calendar.events.list(calendarOptions, cb))
+    })
 
     return response.data.items
 }
 
-export { initAuthClient, logInWithGoogle, getMeetings }
+export { initAuthClient, setAuthTokens, logInWithGoogle, getMeetings }

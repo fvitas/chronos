@@ -17,7 +17,7 @@ class Calendar extends Component {
         console.log(meetings)
     }
 
-    increment = async () => {
+    increment = () => {
         this.count++
     }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
-import _ from 'lodash'
+import { isEmpty, endsWith } from 'lodash-es'
 import '../App.styl'
 
 import { saveUserCredentials } from '../indexeddb/indexeddbApi'
@@ -13,7 +13,7 @@ class AuthClient extends Component {
     onDrop = async (acceptedArray) => {
         let file = acceptedArray[0]
 
-        if (_.isEmpty(acceptedArray) || !_.endsWith(file.name, 'json')) {
+        if (isEmpty(acceptedArray) || !endsWith(file.name, 'json')) {
             this.setState({ fileRejected: true })
             return
         }

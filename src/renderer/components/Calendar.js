@@ -1,24 +1,15 @@
 import React, { Component } from 'react'
-import { observer } from 'mobx-react'
-import { observable } from 'mobx'
 import '../App.styl'
-
 import { getMeetings } from '../google/googleApi'
+import { dateStore } from '../state/DateStore'
+import { CalendarNavigation } from './CalendarNavigation'
 
-@observer
 class Calendar extends Component {
-
-    @observable
-    count = 0
 
     getMeetings = async () => {
         let meetings = await getMeetings()
 
         console.log(meetings)
-    }
-
-    increment = () => {
-        this.count++
     }
 
     render() {
@@ -28,8 +19,8 @@ class Calendar extends Component {
                     <h1 className='App-title'>Protected view</h1>
                 </header>
                 <button onClick={this.getMeetings}>get meetings</button>
-                <button onClick={this.increment}>inc</button>
-                { this.count }
+
+                <CalendarNavigation dateStore={dateStore}/>
             </div>
         )
     }

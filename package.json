@@ -5,22 +5,21 @@
   "main": "main.js",
   "productName": "Chronos",
   "scripts": {
-    "parcel:dev": "parcel ./src/renderer/index.html -d build/",
+    "parcel:dev": "rm -rf build && parcel ./src/renderer/index.html -d build/",
     "electron:dev": "ELECTRON_START_URL=http://localhost:1234 electron .",
-    "parcel:build": "parcel build ./src/renderer/index.html -d build/ --public-url ./"
+    "parcel:build": "rm -rf build && parcel build ./src/renderer/index.html -d build/ --public-url ./ --experimental-scope-hoisting"
   },
   "dependencies": {
-    "bluebird": "^3.5.1",
-    "electron": "^2.0.2",
+    "electron": "^2.0.4",
     "googleapis": "^32.0.0",
-    "idb": "^2.1.2",
-    "lodash": "^4.17.10",
+    "idb": "^2.1.3",
+    "lodash-es": "^4.17.10",
     "menubar": "^5.2.3",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-dropzone": "^4.2.11"
+    "react-dropzone": "^4.2.13"
   },
   "devDependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -30,6 +29,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "parcel-bundler": "^1.9.2",
+    "parcel-plugin-bundle-visualiser": "^1.1.2",
     "stylus": "^0.54.5"
   },
   "browserslist": [

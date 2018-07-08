@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 
+import { Provider } from 'mobx-react'
+import { dateStore } from './state/DateStore'
+
 import { AuthClient } from './components/AuthClient'
 import { Calendar } from './components/Calendar'
 import { Login } from './components/Login'
@@ -54,7 +57,7 @@ class App extends Component {
             do {
                 if (!this.state.isClientEnabled)        <AuthClient onClientActivation={this.onClientActivation}/>
                 else if (!this.state.isAuthenticated)   <Login onLogin={this.onLogin}/>
-                else                                    <Calendar/>
+                else                                    <Provider dateStore={dateStore}><Calendar/></Provider>
             }
         )
     }

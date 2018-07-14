@@ -27,6 +27,11 @@ class DateStore {
             this.date.getDate()
         )
     }
+
+    @action
+    selectDate(year, month, day) {
+        this.date = new Date(year, month, day)
+    }
 }
 
 const dateStore = new DateStore()

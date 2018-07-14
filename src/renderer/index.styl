@@ -97,28 +97,11 @@ body
 
     .days > div > span
         position: relative
-        padding: 0 8px
         cursor: pointer
-
-    .selected-day > span
-        color: $white
-        z-index: 1
-        position: relative
-
-    .selected-day > span:before
-        content: ''
-        position: absolute
-        top: 50%
-        left: 50%
-        transform: translate(-50%, -50%)
-        width: 25px
-        height: 25px
-        border-radius: 50%
-        background-color: $mainColor
-        z-index: -1
 
     .current-day > span
         position: relative
+        color: $white
 
     .current-day > span:before
         content: ''
@@ -130,6 +113,22 @@ body
         height: 25px
         border-radius: 50%
         border: 1px solid $mainColor
+        background-color: $mainColor
+        cursor: pointer
+        z-index: -1
+
+.days > div:not(.current-day):hover span:before
+    content: ''
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    width: 25px
+    height: 25px
+    border-radius: 50%
+    background-color: rgba(0,0,0,0.1)
+    border: 1px solid rgba(0,0,0,0.1)
+    cursor: pointer
 
 .prev-month,
 .next-month

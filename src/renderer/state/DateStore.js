@@ -6,8 +6,8 @@ class DateStore {
     date = new Date()
 
     @action
-    changeDate(newDate) {
-        this.date = newDate
+    goToToday() {
+        this.date = new Date()
     }
 
     @action

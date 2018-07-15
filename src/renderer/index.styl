@@ -136,6 +136,7 @@ body
 
 .left,
 .right
+    margin-left: 10px
     vertical-align: super
     user-select: none
     cursor: pointer
@@ -208,3 +209,60 @@ for i in (0..10)
     text-align: center
     padding-top: 20vh
     animation: fade-in 0.3s linear forwards
+
+.today
+    height: 30px
+    padding: 0 16px 0 16px
+    border: none
+    border-radius: 3px
+    outline: none
+    text-transform: uppercase
+    user-select: none
+    background-color: white
+    cursor: pointer
+
+    &:active
+        transform: scale(0.98)
+
+.select
+    display: inline-flex
+    flex-direction: column
+    position: relative
+    width: 100px
+    height: 40px
+    border-radius: 5px
+    z-index: 3
+
+.option
+    position: absolute
+    top: 0
+    display: flex
+    order: 2
+    align-items: center
+    padding: 0 30px 0 10px
+    min-height: 40px
+    background: $mainColor
+    border-top: #222 solid 1px
+    width: 100%
+    pointer-events: none
+    box-sizing: border-box
+    overflow: hidden
+    white-space: nowrap
+    z-index: 1
+
+.option:hover
+    background: #7b8bde
+
+.select:focus .option
+    position: relative
+    pointer-events: all
+
+input
+    position: absolute
+    left: -100vw
+
+input:checked + label
+    position: relative
+    order: 1
+    border-top: none
+    z-index: 2

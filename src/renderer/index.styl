@@ -78,7 +78,7 @@ body
     .days-of-week,
     .days
         display: grid
-        grid-template: auto / 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+        grid-template-columns: repeat(7, 1fr)
 
     .days-of-week
         color: $mainColor
@@ -136,10 +136,10 @@ body
 
 .left,
 .right
-    margin-left: 10px
     vertical-align: super
     user-select: none
     cursor: pointer
+    overflow: visible
 
 path
     stroke-width: 3
@@ -153,7 +153,7 @@ path
 
 .left:active path,
 .right:active path
-    stroke-width: 10
+    stroke-width: 15
     transition: all 100ms ease-in-out
 
 .calendar-app
@@ -211,24 +211,15 @@ for i in (0..10)
     animation: fade-in 0.3s linear forwards
 
 .today
-    height: 30px
-    padding: 0 16px 0 16px
-    border: none
-    border-radius: 3px
-    outline: none
-    text-transform: uppercase
+    margin-left: 20px
     user-select: none
-    background-color: white
     cursor: pointer
-
-    &:active
-        transform: scale(0.98)
 
 .select
     display: inline-flex
     flex-direction: column
     position: relative
-    width: 100px
+    width: 80px
     height: 40px
     border-radius: 5px
     z-index: 3
@@ -239,10 +230,10 @@ for i in (0..10)
     display: flex
     order: 2
     align-items: center
-    padding: 0 30px 0 10px
+    padding: 0 8px
     min-height: 40px
     background: $mainColor
-    border-top: #222 solid 1px
+    border-top: #7b8bde solid 1px
     width: 100%
     pointer-events: none
     box-sizing: border-box

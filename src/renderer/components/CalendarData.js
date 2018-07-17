@@ -79,8 +79,6 @@ class CalendarData extends Component {
 
         return (
             <Fragment>
-                <div>{currentDate.toLocaleString()}</div>
-
                 <div className='calendar'>
                     <div className='days-of-week'>
                         {this.dayOfWeeks.map(dayLabel => <div key={dayLabel}>{dayLabel}</div>)}

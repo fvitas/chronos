@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 
 import { Provider } from 'mobx-react'
 import { dateStore } from './state/DateStore'
+import { meetingStore } from './state/MeetingStore'
 
 import { AuthClient } from './components/AuthClient'
 import { Calendar } from './components/Calendar'
 import { Login } from './components/Login'
 
 import { initDB, getUserCredentials, getTokens } from './indexeddb/indexeddbApi'
-import { initAuthClient, setAuthTokens } from './google/googleApi'
+import { getMeetings, initAuthClient, setAuthTokens } from './google/googleApi'
 
 (async () => {
     await initDB()
@@ -16,8 +17,14 @@ import { initAuthClient, setAuthTokens } from './google/googleApi'
     let credentials = await getUserCredentials()
     let tokens = await getTokens()
 
-    initAuthClient(credentials)
-    setAuthTokens(tokens)
+    if (credentials) {
+        initAuthClient(credentials)
+    }
+
+    if (tokens) {
+        setAuthTokens(tokens)
+        meetingStore.meetings = await getMeetings(new Date())
+    }
 })()
 
 class App extends Component {
@@ -46,8 +53,10 @@ class App extends Component {
         this.setState({ isClientEnabled: true })
     }
 
-    onLogin = () => {
+    onLogin = async () => {
         this.setState({ isAuthenticated: true })
+
+        meetingStore.meetings = await getMeetings(new Date())
     }
 
     render() {
@@ -57,7 +66,7 @@ class App extends Component {
             do {
                 if (!this.state.isClientEnabled)        <AuthClient onClientActivation={this.onClientActivation}/>
                 else if (!this.state.isAuthenticated)   <Login onLogin={this.onLogin}/>
-                else                                    <Provider dateStore={dateStore}><Calendar/></Provider>
+                else                                    <Provider dateStore={dateStore} meetingStore={meetingStore}><Calendar/></Provider>
             }
         )
     }

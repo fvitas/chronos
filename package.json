@@ -5,9 +5,14 @@
   "main": "main.js",
   "productName": "Chronos",
   "scripts": {
-    "parcel:dev": "parcel ./src/renderer/index.html -d build/",
+    "parcel:dev": "rm -rf build && parcel ./src/renderer/index.html -d build/",
     "electron:dev": "ELECTRON_START_URL=http://localhost:1234 electron .",
-    "parcel:build": "rm -rf build && parcel build ./src/renderer/index.html -d build/ --public-url ./ --experimental-scope-hoisting"
+    "parcel:build": "rm -rf build && parcel build ./src/renderer/index.html -d build/ --public-url ./",
+    "parcel:build:treeshake": "rm -rf build && parcel build ./src/renderer/index.html -d build/ --public-url ./ --experimental-scope-hoisting",
+    "electron": "electron .",
+    "electron:build:mac": "./node_modules/.bin/build --mac",
+    "electron:build:linux": "./node_modules/.bin/build --linux --ia32 --x64",
+    "electron:build:win": "./node_modules/.bin/build --win --ia32 --x64"
   },
   "dependencies": {
     "electron": "2.0.4",
@@ -28,7 +33,7 @@
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
-    "parcel-bundler": "1.9.2",
+    "parcel-bundler": "1.9.7",
     "parcel-plugin-bundle-visualiser": "1.1.2",
     "stylus": "0.54.5"
   },

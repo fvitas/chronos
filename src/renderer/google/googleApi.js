@@ -15,8 +15,6 @@ function initAuthClient(credentials) {
 }
 
 function setAuthTokens(tokens) {
-    if (!authClient) return
-
     authClient.setCredentials(tokens)
 }
 
@@ -58,12 +56,15 @@ function logInWithGoogle(credentials) {
     })
 }
 
-async function getMeetings() {
+async function getMeetings(date) {
+    // if (!authClient) return
+
     let calendar = google.calendar({ version: 'v3', auth: authClient })
 
     let response = await calendar.events.list({
         calendarId: 'primary',
-        timeMin: (new Date()).toISOString(),
+        timeMin: new Date(date.getFullYear(), date.getMonth(), date.getDate()).toISOString(),
+        timeMax: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).toISOString(),
         maxResults: 10,
         singleEvents: true,
         orderBy: 'startTime'

@@ -1,16 +1,11 @@
 import React, { Component } from 'react'
 import '../App.styl'
-// import { getMeetings } from '../google/googleApi'
+
 import { CalendarNavigation } from './CalendarNavigation'
 import { CalendarData } from './CalendarData'
+import { MeetingList } from './MeetingList'
 
 class Calendar extends Component {
-
-    // getMeetings = async () => {
-    //     let meetings = await getMeetings()
-    //
-    //     console.log(meetings)
-    // }
 
     render() {
         return (
@@ -19,8 +14,7 @@ class Calendar extends Component {
 
                 <CalendarData />
 
-                {/*<MeetingList />*/}
-
+                <MeetingList />
             </div>
         )
     }

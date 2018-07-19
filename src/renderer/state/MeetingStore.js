@@ -7,16 +7,17 @@ class MeetingStore {
     @observable
     meetings = []
 
-    subscribeToDateChange = reaction(
-        () => dateStore.date,
-        async (date) => {
-            this.meetings = await getMeetings(date)
-        }
-    )
+    constructor() {
+        this.subscribeToDateChange()
+    }
 
-    @action
-    async getMeetings() {
-        console.log('get meetings')
+    subscribeToDateChange() {
+        reaction(
+            () => dateStore.date,
+            async (date) => {
+                this.meetings = await getMeetings(date)
+            }
+        )
     }
 }
 

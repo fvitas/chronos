@@ -8,8 +8,8 @@ const url = require('url')
 const mb = menubar({
     alwaysOnTop: true,
     showDockIcon: true,
-    index: process.env.ELECTRON_START_URL || url.format({ pathname: path.join(__dirname, 'build/index.html'), protocol: 'file:', slashes: true }),
-    icon: path.join(__dirname, 'src/main/assets/icons/IconTemplate.png'),
+    index: process.env.ELECTRON_START_URL || url.format({ pathname: path.join(__dirname, 'build/renderer/index.html'), protocol: 'file:', slashes: true }),
+    icon: path.join(__dirname, 'images/icons/IconTemplate.png'),
     width: 320,
     height: 650,
     y: 20,

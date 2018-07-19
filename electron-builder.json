@@ -1,0 +1,64 @@
+{
+  "appId": "com.electron.chronos",
+  "copyright": "Copyright © 2018 Filip Vitas",
+  "asar": true,
+  "compression": "maximum",
+  "files": [
+    "build/",
+    "images/",
+    "main.js",
+    "package.json"
+  ],
+  "mac": {
+    "artifactName": "${name}-mac-${arch}.${ext}",
+    "target": ["dmg"],
+    "icon": "images/icons/icon.icns",
+    "category": "public.app-category.productivity"
+  },
+  "linux": {
+    "target": ["deb", "AppImage"],
+    "executableName": "${name}-linux-${arch}.${ext}",
+    "description": "",
+    "synopsis": "",
+    "maintainer": "Filip Vitas <filip.vitas.dev@gmail.com>",
+    "category": "",
+    "packageCategory": ""
+  },
+  "win": {
+    "target": ["nsis", "portable"],
+    "icon": "images/icons/icon.ico",
+    "verifyUpdateCodeSignature": false
+  },
+  "dmg": {
+    "contents": [
+      {
+        "x": 125,
+        "y": 140
+      },
+      {
+        "x": 355,
+        "y": 140,
+        "type": "link",
+        "path": "/Applications"
+      }
+    ],
+    "background": "images/background-mac.png",
+    "window": {
+      "width": 512,
+      "height": 320
+    }
+  },
+  "nsis": {
+    "artifactName": "${name}-windows-installer-${arch}.${ext}"
+  },
+  "portable": {
+    "artifactName": "${name}-windows-portable-${arch}.${ext}"
+  },
+  "electronDownload": {
+    "cache": ".electron-cache"
+  },
+  "directories": {
+    "buildResources": "resources",
+    "output": "release"
+  }
+}

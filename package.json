@@ -2,17 +2,17 @@
   "name": "chronos",
   "version": "0.0.1",
   "description": "If you have a meeting, greek god (Chronos) will remind you.",
-  "main": "main.js",
+  "main": "app.js",
   "productName": "Chronos",
   "scripts": {
-    "parcel:dev": "rm -rf build/renderer && parcel ./src/renderer/index.html -d build/renderer/",
-    "parcel:prod": "rm -rf build/renderer && parcel build ./src/renderer/index.html -d build/renderer/ --public-url ./",
-    "parcel:prod:treeshake": "rm -rf build/renderer && parcel build ./src/renderer/index.html -d build/renderer/ --public-url ./ --experimental-scope-hoisting",
-    "electron:dev": "ELECTRON_START_URL=http://localhost:1234 electron .",
-    "electron:debug": "electron . --inspect=5858",
-    "electron:prod": "electron .",
-    "copy:main": "cpx './src/main/**' './build/main'",
-    "release": "rm -rf release && npm run parcel:prod && npm run copy:main && build --dir --x64 --publish=never"
+    "parcel:dev":             "rm -rf build && npm run copy:main && parcel ./src/renderer/index.html -d build/renderer/",
+    "parcel:prod":            "rm -rf build && npm run copy:main && parcel build ./src/renderer/index.html -d build/renderer/ --public-url ./ --no-source-maps",
+    "parcel:prod:treeshake":  "rm -rf build && npm run copy:main && parcel build ./src/renderer/index.html -d build/renderer/ --public-url ./ --no-source-maps --experimental-scope-hoisting",
+    "electron:dev":           "ELECTRON_START_URL=http://localhost:1234 electron .",
+    "electron:debug":         "ELECTRON_START_URL=http://localhost:1234 electron . --inspect=5858",
+    "electron:prod":          "electron .",
+    "copy:main":              "cpx './src/main/**' './build/main'",
+    "release":                "rm -rf release && npm run parcel:prod && build --dir --x64 --publish=never"
   },
   "dependencies": {
     "googleapis": "32.0.0",

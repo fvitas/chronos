@@ -1,16 +1,16 @@
 
-const { app, shell, Menu } = require('electron')
+const { app, shell, ipcMain, Menu } = require('electron')
 
 const menubar = require('menubar')
 const path = require('path')
 const url = require('url')
 
-const { getMenu } = require('./menu-util')
+const { contextMenu, applicationMenu  } = require('./menus')
 
 const mb = menubar({
     alwaysOnTop: true,
     showDockIcon: false,
-    index: process.env.ELECTRON_START_URL || url.format({ pathname: path.join(__dirname, '../renderer/index.html'), protocol: 'file:', slashes: true }),
+    index: process.env.PARCEL_URL || url.format({ pathname: path.join(__dirname, '../renderer/index.html'), protocol: 'file:', slashes: true }),
     icon: path.join(__dirname, '../../static/icons/IconTemplate.png'),
     width: 320,
     height: 650,
@@ -36,8 +36,7 @@ function handleRedirect (event, url) {
 }
 
 mb.on('show', () => {
-    const menu = getMenu(mb.window)
-    Menu.setApplicationMenu(menu)
+    Menu.setApplicationMenu(applicationMenu)
 })
 
 mb.on('after-show', () => {
@@ -51,3 +50,10 @@ mb.on('after-hide', () => {
 })
 
 mb.on('window-all-closed', app.quit)
+
+ipcMain.on('show-context-menu', (event, coordinates) => {
+    contextMenu.popup({
+        x: Math.floor(coordinates.x) + 10,
+        y: Math.floor(coordinates.y) + 15
+    })
+})

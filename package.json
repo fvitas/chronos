@@ -5,12 +5,12 @@
   "main": "app.js",
   "productName": "Chronos",
   "scripts": {
-    "parcel:dev":             "rm -rf build && parcel ./src/renderer/index.html -d build/renderer/",
-    "parcel:prod":            "rm -rf build && parcel build ./src/renderer/index.html -d build/renderer/ --public-url ./ --no-source-maps",
-    "parcel:prod:treeshake":  "rm -rf build && parcel build ./src/renderer/index.html -d build/renderer/ --public-url ./ --no-source-maps --experimental-scope-hoisting",
+    "parcel:dev":             "rm -rf build/renderer && parcel ./src/renderer/index.html -d build/renderer/",
+    "parcel:prod":            "rm -rf build/renderer && parcel build ./src/renderer/index.html -d build/renderer/ --public-url ./ --no-source-maps",
+    "parcel:prod:treeshake":  "rm -rf build/renderer && parcel build ./src/renderer/index.html -d build/renderer/ --public-url ./ --no-source-maps --experimental-scope-hoisting",
     "electron:dev":           "NODE_ENV=development PARCEL_URL=http://localhost:1234 electron .",
     "electron:debug":         "NODE_ENV=development PARCEL_URL=http://localhost:1234 electron . --inspect=5858",
-    "copy:main":              "cpx './src/main/**' './build/main'",
+    "copy:main":              "rm -rf build/main && cpx './src/main/**' './build/main'",
     "release":                "rm -rf release && npm run parcel:prod && npm run copy:main && build --dir --x64 --publish=never"
   },
   "dependencies": {

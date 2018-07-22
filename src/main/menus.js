@@ -20,7 +20,7 @@ let preferenceItem = {
     label: 'Preferences',
     accelerator: 'Cmd+,',
     click() {
-        // app.chronos.openPrefsWindow()
+        app.chronos.openPreferenceWindow()
     }
 }
 

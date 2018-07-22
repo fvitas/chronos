@@ -1,5 +1,5 @@
 
-const { app, shell, ipcMain, Menu } = require('electron')
+const { app, shell, ipcMain, BrowserWindow, Menu } = require('electron')
 
 const menubar = require('menubar')
 const path = require('path')
@@ -7,7 +7,38 @@ const url = require('url')
 
 const { contextMenu, applicationMenu  } = require('./menus')
 
-const mb = menubar({
+function handleRedirect (event, url) {
+    if (url !== mb.window.webContents.getURL()) {
+        event.preventDefault()
+        shell.openExternal(url)
+    }
+}
+
+let preferenceWindow
+
+function openPreferenceWindow () {
+    if (preferenceWindow) {
+        return preferenceWindow.show()
+    }
+
+    preferenceWindow = new BrowserWindow({
+        width: 400,
+        height: 480,
+        resizable: false,
+        minimizable: false,
+        maximizable: false,
+        movable: true,
+        titleBarStyle: 'hiddenInset',
+        show: false
+    })
+
+    preferenceWindow.loadURL(`file://${__dirname}/../renderer/preferences.html`);
+
+    preferenceWindow.on('ready-to-show', () => { preferenceWindow.show() })
+    preferenceWindow.on('close', () => { preferenceWindow = null })
+}
+
+let mb = menubar({
     alwaysOnTop: true,
     showDockIcon: false,
     index: process.env.PARCEL_URL || url.format({ pathname: path.join(__dirname, '../renderer/index.html'), protocol: 'file:', slashes: true }),
@@ -28,14 +59,9 @@ const mb = menubar({
     }
 })
 
-function handleRedirect (event, url) {
-    if (url !== mb.window.webContents.getURL()) {
-        event.preventDefault()
-        shell.openExternal(url)
-    }
-}
-
 mb.on('show', () => {
+    app.chronos = { openPreferenceWindow }
+
     Menu.setApplicationMenu(applicationMenu)
 })
 
@@ -50,6 +76,9 @@ mb.on('after-hide', () => {
 })
 
 mb.on('window-all-closed', app.quit)
+
+
+//--------------------------------------------------------------------------------------------------------
 
 ipcMain.on('show-context-menu', (event, coordinates) => {
     contextMenu.popup({

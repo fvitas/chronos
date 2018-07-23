@@ -15,9 +15,9 @@
                 overflow: hidden;
                 font-family: sans-serif;
                 font-size: 14px;
-                -webkit-app-region: drag
+                -webkit-font-smoothing: antialiased;
             }
-            .content {
+            main {
                 height: 100%;
                 background-color: #fff;
             }
@@ -29,6 +29,7 @@
                 opacity: 1;
                 transition: transform .12s ease-in-out,opacity .12s ease-in-out,height .12s ease-in-out;
                 will-change: transform,opacity,height;
+                -webkit-app-region: drag;
             }
             .window-header:before {
                 background-image: linear-gradient(-180deg,#f9f9f9,#f1f1f1);
@@ -48,27 +49,25 @@
                 box-shadow: 0 1px 0 0 #ddd, inset 0 1px 0 0 #fff;
                 transition: top .12s ease-in-out,opacity .12s ease-in-out;
             }
-            .title-bar {
+            .window-title {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 width: 100%;
                 height: 40px;
-            }
-            .window-header .window__title {
                 font-size: 16px;
-            }
-            .txt {
                 cursor: default !important;
                 -webkit-user-select: none !important;
             }
-            .preference {
-                padding: 0 16px;
+            .preferences {
+                height: calc(100vh - 40px);
+                overflow: auto;
             }
-            .preference-part {
+            .preference {
                 display: flex;
                 width: 100%;
-                padding: 16px 0;
+                height: 65px;
+                padding: 16px;
                 flex-wrap: wrap;
                 align-items: center;
             }
@@ -77,15 +76,10 @@
                 flex: 1 0 50%;
                 flex-direction: column;
             }
-            .preference-part .preference__description,
-            .preference-part .preference__title {
-                max-width: 350px;
-            }
             .preference__description {
                 font-size: 12px;
-                color: gray;
+                color: #999;
             }
-
 
             .item {
                 transition: all 0.2s;
@@ -96,14 +90,14 @@
                 color: #253368;
             }
             .item .toggle {
-                width: 55px;
+                width: 56px;
                 padding: 3px;
                 border-radius: 30px;
                 background-color: #e6eaee;
                 transition: all 0.2s;
             }
             .item.active .toggle {
-                background-color: #81c784;
+                background-color: #5cca5c;
             }
             .item .ball {
                 height: 25px;
@@ -120,67 +114,73 @@
         </style>
     </head>
     <body>
-        <main class="content">
+        <main>
             <header class="window-header">
-                <div class="title-bar">
-                    <span class="window__title txt">Preferences</span>
-                </div>
+                <div class="window-title">Preferences</div>
             </header>
             <div class="preferences">
                 <div class="preference">
-                    <div class="preference-part">
-                        <div class="preference-content">
-                            <div class="preference__title">Start automatically</div>
-                            <div class="preference__description">Launch Chronos on system startup (not working)</div>
-                        </div>
-                        <div class="item">
-                            <div class="toggle">
-                                <div class="ball"></div>
-                            </div>
+                    <div class="preference-content">
+                        <div class="preference__title">Start automatically (not working)</div>
+                        <div class="preference__description">Launch Chronos on system startup</div>
+                    </div>
+                    <div class="item">
+                        <div class="toggle">
+                            <div class="ball"></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="preference">
-                    <div class="preference-part">
-                        <div class="preference-content">
-                            <div class="preference__title">Dark theme</div>
-                            <div class="preference__description">Apply dark theme to calendar (not working)</div>
-                        </div>
-                        <div class="item">
-                            <div class="toggle">
-                                <div class="ball"></div>
-                            </div>
+                    <div class="preference-content">
+                        <div class="preference__title">Dark theme (not working)</div>
+                        <div class="preference__description">Apply dark theme to calendar</div>
+                    </div>
+                    <div class="item">
+                        <div class="toggle">
+                            <div class="ball"></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="preference">
-                    <div class="preference-part">
-                        <div class="preference-content">
-                            <div class="preference__title">Do Not Disturb</div>
-                            <div class="preference__description">Ignore notifications and do your job (not working)</div>
-                        </div>
-                        <div class="item">
-                            <div class="toggle">
-                                <div class="ball"></div>
-                            </div>
+                    <div class="preference-content">
+                        <div class="preference__title">Do Not Disturb (not working)</div>
+                        <div class="preference__description">Ignore notifications and do your job</div>
+                    </div>
+                    <div class="item">
+                        <div class="toggle">
+                            <div class="ball"></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="preference">
-                    <div class="preference-part">
-                        <div class="preference-content">
-                            <div class="preference__title">Always on top</div>
-                            <div class="preference__description">Show Chronos on top of other applications</div>
-                        </div>
-                        <div class="item active">
-                            <div class="toggle">
-                                <div class="ball"></div>
-                            </div>
+                    <div class="preference-content">
+                        <div class="preference__title">Always on top</div>
+                        <div class="preference__description">Show Chronos on top of other applications</div>
+                    </div>
+                    <div class="item active">
+                        <div class="toggle">
+                            <div class="ball"></div>
                         </div>
                     </div>
+                </div>
+
+                <div class="preference">
+                    <div class="preference-content">
+                        <div class="preference__title">Logout User (not working)</div>
+                        <div class="preference__description">Delete information about google user</div>
+                    </div>
+                    <button class="btn error">Logout</button>
+                </div>
+
+                <div class="preference">
+                    <div class="preference-content">
+                        <div class="preference__title">Delete Google Client (not working)</div>
+                        <div class="preference__description">Delete Client ID</div>
+                    </div>
+                    <button class="btn error">Delete Client</button>
                 </div>
             </div>
         </main>

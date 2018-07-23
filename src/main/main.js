@@ -32,7 +32,7 @@ function openPreferenceWindow () {
         show: false
     })
 
-    preferenceWindow.loadURL(`file://${__dirname}/../renderer/preferences.html`);
+    preferenceWindow.loadURL(process.env.PARCEL_URL ? `${process.env.PARCEL_URL}/preferences.html` : url.format({ pathname: path.join(__dirname, '../renderer/preferences.html'), protocol: 'file:', slashes: true }));
 
     preferenceWindow.on('ready-to-show', () => { preferenceWindow.show() })
     preferenceWindow.on('close', () => { preferenceWindow = null })
@@ -41,7 +41,7 @@ function openPreferenceWindow () {
 let mb = menubar({
     alwaysOnTop: true,
     showDockIcon: false,
-    index: process.env.PARCEL_URL || url.format({ pathname: path.join(__dirname, '../renderer/index.html'), protocol: 'file:', slashes: true }),
+    index: process.env.PARCEL_URL ? `${process.env.PARCEL_URL}/index.html` : url.format({ pathname: path.join(__dirname, '../renderer/index.html'), protocol: 'file:', slashes: true }),
     icon: path.join(__dirname, '../../static/icons/IconTemplate.png'),
     width: 320,
     height: 650,

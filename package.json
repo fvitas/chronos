@@ -5,7 +5,7 @@
   "main": "app.js",
   "productName": "Chronos",
   "scripts": {
-    "parcel:dev":             "rm -rf build/renderer && parcel ./src/renderer/index.html -d build/renderer/",
+    "parcel:dev":             "rm -rf build/renderer && parcel ./src/renderer/index.html ./src/renderer/preferences.html -d build/renderer/",
     "parcel:prod":            "rm -rf build/renderer && parcel build ./src/renderer/index.html -d build/renderer/ --public-url ./ --no-source-maps",
     "parcel:prod:treeshake":  "rm -rf build/renderer && parcel build ./src/renderer/index.html -d build/renderer/ --public-url ./ --no-source-maps --experimental-scope-hoisting",
     "electron:dev":           "NODE_ENV=development PARCEL_URL=http://localhost:1234 electron .",

@@ -7,7 +7,7 @@ async function initDB() {
     })
 }
 
-async function getUserCredentials() {
+async function getClientCredentials() {
     let db = await idb.open('user', 1)
 
     let tx = db.transaction('credentials', 'readonly')
@@ -18,7 +18,7 @@ async function getUserCredentials() {
     return credentials[0]
 }
 
-async function saveUserCredentials(credentials) {
+async function saveClientCredentials(credentials) {
     let db = await idb.open('user', 1)
 
     let tx = db.transaction('credentials', 'readwrite')
@@ -30,7 +30,19 @@ async function saveUserCredentials(credentials) {
     db.close()
 }
 
-async function saveTokens(tokens) {
+async function deleteClientCredentials() {
+    let db = await idb.open('user', 1)
+
+    let tx = db.transaction('credentials', 'readwrite')
+    let store = tx.objectStore('credentials')
+
+    await store.clear()
+
+    await tx.complete
+    db.close()
+}
+
+async function saveUserTokens(tokens) {
     let db = await idb.open('user', 1)
 
     let tx = db.transaction('tokens', 'readwrite')
@@ -42,7 +54,7 @@ async function saveTokens(tokens) {
     db.close()
 }
 
-async function getTokens() {
+async function getUserTokens() {
     let db = await idb.open('user', 1)
 
     let tx = db.transaction('tokens', 'readonly')
@@ -53,4 +65,16 @@ async function getTokens() {
     return credentials[0]
 }
 
-export { initDB, getUserCredentials, saveUserCredentials, saveTokens, getTokens }
+async function deleteUserTokens() {
+    let db = await idb.open('user', 1)
+
+    let tx = db.transaction('tokens', 'readwrite')
+    let store = tx.objectStore('tokens')
+
+    await store.clear()
+
+    await tx.complete
+    db.close()
+}
+
+export { initDB, getClientCredentials, saveClientCredentials, deleteClientCredentials, saveUserTokens, getUserTokens, deleteUserTokens }

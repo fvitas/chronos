@@ -1,107 +1,116 @@
 @import '../fonts/fonts.styl'
 
-* {
-    box-sizing: border-box;
-}
-body {
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    font-family: sans-serif;
-    font-size: 14px;
-    -webkit-font-smoothing: antialiased;
-}
-main {
-    height: 100%;
-    background-color: #fff;
-}
-.window-header {
-    width: 100%;
-    max-height: 100%;
-    border-radius: 4px 4px 0 0;
-    position: relative;
-    opacity: 1;
-    transition: transform .12s ease-in-out,opacity .12s ease-in-out,height .12s ease-in-out;
-    will-change: transform,opacity,height;
-    -webkit-app-region: drag;
-}
-.window-header:before {
-    background-image: linear-gradient(-180deg,#f9f9f9,#f1f1f1);
-    box-shadow: 0 1px 0 0 #ddd, inset 0 1px 0 0 #fff;
-}
-.window-header:before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    opacity: 1;
-    z-index: -1;
-    background-color: #f9f9f9;
-    background-image: linear-gradient(-180deg,#f9f9f9,#f1f1f1);
-    box-shadow: 0 1px 0 0 #ddd, inset 0 1px 0 0 #fff;
-    transition: top .12s ease-in-out,opacity .12s ease-in-out;
-}
-.window-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    font-size: 16px;
-    cursor: default !important;
-    -webkit-user-select: none !important;
-}
-.preferences {
-    height: calc(100vh - 40px);
-    overflow: auto;
-}
-.preference {
-    display: flex;
-    width: 100%;
-    height: 65px;
-    padding: 16px;
-    flex-wrap: wrap;
-    align-items: center;
-}
-.preference-content {
-    display: flex;
-    flex: 1 0 50%;
-    flex-direction: column;
-}
-.preference__description {
-    font-size: 12px;
-    color: #999;
-}
+*
+    box-sizing: border-box
 
-.item {
-    transition: all 0.2s;
-    cursor: pointer;
-    user-select: none;
-}
-.item.active {
-    color: #253368;
-}
-.item .toggle {
-    width: 56px;
-    padding: 3px;
-    border-radius: 30px;
-    background-color: #e6eaee;
-    transition: all 0.2s;
-}
-.item.active .toggle {
-    background-color: #5cca5c;
-}
-.item .ball {
-    height: 25px;
-    width: 25px;
-    margin-left: 0;
-    border-radius: 25px;
-    box-shadow: 0 3px 6px 0 rgba(0,35,11,0.2);
-    background-color: #fff;
-    transition: all 0.3s ease-out;
-}
-.item.active .ball {
-    margin-left: 25px;
-}
+body
+    padding: 0
+    margin: 0
+    overflow: hidden
+    font: 14px / 1.4 'Lato', sans-serif
+
+main
+    height: 100%
+    background-color: #fff
+
+.window-header
+    width: 100%
+    max-height: 100%
+    border-radius: 4px 4px 0 0
+    position: relative
+    opacity: 1
+    will-change: transform
+    -webkit-app-region: drag
+
+.window-header:before
+    content: ""
+    width: 100%
+    height: 100%
+    position: absolute
+    background-color: #f9f9f9
+    background-image: linear-gradient(-180deg,#f9f9f9,#f1f1f1)
+    box-shadow: 0 1px 0 0 #ddd, inset 0 1px 0 0 #fff
+    z-index: -1
+
+.window-title
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 100%
+    height: 40px
+    font-size: 16px
+    cursor: default !important
+    -webkit-user-select: none !important
+
+.preferences
+    height: calc(100vh - 40px)
+    overflow: auto
+
+.preference
+    display: flex
+    width: 100%
+    height: 65px
+    padding: 16px
+    flex-wrap: wrap
+    align-items: center
+
+.preference-content
+    display: flex
+    flex: 1 0 50%
+    flex-direction: column
+
+.preference__description
+    font-size: 12px
+    color: #999
+
+.checkbox
+    transition: all 0.2s
+    cursor: pointer
+    user-select: none
+
+    .toggle
+        width: 56px
+        padding: 3px
+        border-radius: 30px
+        background-color: #e6eaee
+        transition: all 0.2s
+
+    .ball
+        height: 25px
+        width: 25px
+        margin-left: 0
+        border-radius: 25px
+        box-shadow: 0 3px 6px 0 rgba(0,35,11,0.2)
+        background-color: #fff
+        transition: all 0.3s ease-out
+
+    &.active .toggle
+        background-color: #5cca5c
+    &.active .ball
+        margin-left: 25px
+
+.btn
+    min-width: 70px
+    padding: 8px
+    border-radius: 3px
+    border: none
+    outline: none
+    box-shadow:
+        0 2px 2px 0 rgba(0,0,0,0.14),
+        0 3px 1px -2px rgba(0,0,0,0.12),
+        0 1px 5px 0 rgba(0,0,0,0.2)
+    cursor: pointer
+    text-align: center
+    text-transform: uppercase
+    user-select: none
+    color: white
+
+    &:active
+        transform: scale(0.95)
+
+.btn__info
+    background: #4285f4
+
+.btn__error
+    background: #E57373
+

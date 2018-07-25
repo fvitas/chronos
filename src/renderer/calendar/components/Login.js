@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import '../App.styl'
 
-import { getUserCredentials, saveTokens } from '../indexeddb/indexeddbApi'
+import { getClientCredentials, saveUserTokens } from '../indexeddb/indexeddbApi'
 import { logInWithGoogle, setAuthTokens } from '../google/googleApi'
 
 class Login extends Component {
     login = async () => {
-        let credentials = await getUserCredentials()
+        let credentials = await getClientCredentials()
         let tokens = await logInWithGoogle(credentials)
 
         setAuthTokens(tokens)
-        await saveTokens(tokens)
+        await saveUserTokens(tokens)
 
         this.props.onLogin()
     }
@@ -21,8 +21,7 @@ class Login extends Component {
                 <header className='App-header'>
                     <h1 className='App-title'>Welcome to Chronos</h1>
                 </header>
-                <p>You should login with google account</p>
-                <button onClick={this.login}>Log in</button>
+                <button onClick={this.login}>Login with Google</button>
             </div>
         )
     }

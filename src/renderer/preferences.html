@@ -6,6 +6,12 @@
         <title>Preferences</title>
     </head>
     <body>
+        <script>
+            window.nodeRequire = require
+            delete window.require
+            delete window.exports
+            delete window.module
+        </script>
         <main>
             <header class="window-header">
                 <div class="window-title">Preferences</div>
@@ -16,7 +22,7 @@
                         <div class="preference__title">Start automatically (not working)</div>
                         <div class="preference__description">Launch Chronos on system startup</div>
                     </div>
-                    <div class="item">
+                    <div class="checkbox">
                         <div class="toggle">
                             <div class="ball"></div>
                         </div>
@@ -28,7 +34,7 @@
                         <div class="preference__title">Dark theme (not working)</div>
                         <div class="preference__description">Apply dark theme to calendar</div>
                     </div>
-                    <div class="item">
+                    <div class="checkbox">
                         <div class="toggle">
                             <div class="ball"></div>
                         </div>
@@ -40,7 +46,7 @@
                         <div class="preference__title">Do Not Disturb (not working)</div>
                         <div class="preference__description">Ignore notifications and do your job</div>
                     </div>
-                    <div class="item">
+                    <div class="checkbox">
                         <div class="toggle">
                             <div class="ball"></div>
                         </div>
@@ -52,7 +58,7 @@
                         <div class="preference__title">Always on top</div>
                         <div class="preference__description">Show Chronos on top of other applications</div>
                     </div>
-                    <div class="item active">
+                    <div class="checkbox active">
                         <div class="toggle">
                             <div class="ball"></div>
                         </div>
@@ -61,18 +67,30 @@
 
                 <div class="preference">
                     <div class="preference-content">
-                        <div class="preference__title">Logout User (not working)</div>
-                        <div class="preference__description">Delete information about google user</div>
+                        <div class="preference__title">Keep in Dock (not working)</div>
+                        <div class="preference__description">Show application icon inside Dock</div>
                     </div>
-                    <button class="btn error">Logout</button>
+                    <div class="checkbox">
+                        <div class="toggle">
+                            <div class="ball"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="preference">
                     <div class="preference-content">
-                        <div class="preference__title">Delete Google Client (not working)</div>
-                        <div class="preference__description">Delete Client ID</div>
+                        <div class="preference__title">Logout User</div>
+                        <div class="preference__description">Delete google user data</div>
                     </div>
-                    <button class="btn error">Delete Client</button>
+                    <button class="btn btn__error" id="logout">Logout</button>
+                </div>
+
+                <div class="preference">
+                    <div class="preference-content">
+                        <div class="preference__title">Delete Google Client</div>
+                        <div class="preference__description">Delete Client ID, this will delete user data</div>
+                    </div>
+                    <button class="btn btn__error" id="deleteClient">Delete Client</button>
                 </div>
             </div>
         </main>

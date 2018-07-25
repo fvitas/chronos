@@ -8,14 +8,14 @@ import { AuthClient } from './components/AuthClient'
 import { Calendar } from './components/Calendar'
 import { Login } from './components/Login'
 
-import { initDB, getUserCredentials, getTokens } from './indexeddb/indexeddbApi'
+import { initDB, getClientCredentials, deleteClientCredentials, getUserTokens, deleteUserTokens } from './indexeddb/indexeddbApi'
 import { getMeetings, initAuthClient, setAuthTokens } from './google/googleApi'
 
 (async () => {
     await initDB()
 
-    let credentials = await getUserCredentials()
-    let tokens = await getTokens()
+    let credentials = await getClientCredentials()
+    let tokens = await getUserTokens()
 
     if (credentials) {
         initAuthClient(credentials)
@@ -37,8 +37,8 @@ class App extends Component {
 
     async componentDidMount () {
         let newState = {
-            isAuthenticated: !!await getTokens(),
-            isClientEnabled: !!await getUserCredentials(),
+            isAuthenticated: !!await getUserTokens(),
+            isClientEnabled: !!await getClientCredentials(),
             pauseRender: false
         }
 
@@ -71,5 +71,18 @@ class App extends Component {
         )
     }
 }
+
+const { ipcRenderer } = nodeRequire('electron')
+
+ipcRenderer.on('delete-user-token', async (event) => {
+    await deleteUserTokens()
+    document.location.reload(false)
+})
+
+ipcRenderer.on('delete-client-credentials', async () => {
+    await deleteUserTokens()
+    await deleteClientCredentials()
+    document.location.reload(false)
+})
 
 export default App

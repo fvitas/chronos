@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone'
 import { isEmpty, endsWith } from 'lodash-es'
 import '../App.styl'
 
-import { saveUserCredentials } from '../indexeddb/indexeddbApi'
+import { saveClientCredentials } from '../indexeddb/indexeddbApi'
 
 class AuthClient extends Component {
     state = {
@@ -23,7 +23,7 @@ class AuthClient extends Component {
         let fileContent = nodeRequire('fs').readFileSync(file.path)
         let credentials = JSON.parse(fileContent)
 
-        await saveUserCredentials(credentials)
+        await saveClientCredentials(credentials)
         this.props.onClientActivation()
     }
 

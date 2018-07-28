@@ -50,15 +50,15 @@ class App extends Component {
     ]
 
     triggerAction = (event) => {
+        let action = event.target.dataset['action']
+        let calendarWindow = nodeRequire('electron').remote.webContents.fromId(1) // calendar window is always first window
 
-        if (event.target.dataset['action'] === 'logout') {
-            let calendar = nodeRequire('electron').remote.webContents.fromId(1) // calendar window is always first window
-            calendar.send('delete-user-token')
+        if (action === 'logout') {
+            calendarWindow.send('delete-user-token')
         }
 
-        if (event.target.dataset['action'] === 'deleteClient') {
-            let calendar = nodeRequire('electron').remote.webContents.fromId(1)
-            calendar.send('delete-client-credentials')
+        if (action === 'deleteClient') {
+            calendarWindow.send('delete-client-credentials')
         }
     }
 

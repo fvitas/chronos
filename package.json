@@ -11,7 +11,11 @@
     "electron:dev":           "NODE_ENV=development PARCEL_URL=http://localhost:1234 electron .",
     "electron:debug":         "NODE_ENV=development PARCEL_URL=http://localhost:1234 electron . --inspect=5858",
     "copy:main":              "rm -rf build/main && cpx './src/main/**' './build/main'",
-    "release":                "rm -rf release && npm run parcel:prod && npm run copy:main && build --dir --x64 --publish=never"
+    "release:prepare":        "rm -rf release && npm run parcel:prod && npm run copy:main",
+    "release":                "npm run release:prepare && build --dir --x64",
+    "release:max":            "npm run release:prepare && build --dir --x64 --mac",
+    "release:linux":          "npm run release:prepare && build --dir --x64 --ia32 --linux",
+    "release:win":            "npm run release:prepare && build --dir --x64 --ia32 --win"
   },
   "dependencies": {
     "classcat": "3.1.2",

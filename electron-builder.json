@@ -9,14 +9,15 @@
     "app.js"
   ],
   "mac": {
-    "artifactName": "${name}-mac-${arch}.${ext}",
+    "artifactName": "${name}-${arch}.${ext}",
     "target": ["dmg"],
     "icon": "static/icons/icon.icns",
-    "category": "public.app-category.productivity"
+    "category": "public.app-category.productivity",
+    "compression": "maximum"
   },
   "linux": {
     "target": ["deb", "AppImage"],
-    "executableName": "${name}-linux-${arch}.${ext}",
+    "executableName": "${name}-${arch}.${ext}",
     "description": "",
     "synopsis": "",
     "maintainer": "Filip Vitas <filip.vitas.dev@gmail.com>",

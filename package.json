@@ -13,7 +13,7 @@
     "copy:main":              "rm -rf build/main && cpx './src/main/**' './build/main'",
     "release:prepare":        "rm -rf release && npm run parcel:prod && npm run copy:main",
     "release":                "npm run release:prepare && build --dir --x64",
-    "release:max":            "npm run release:prepare && build --dir --x64 --mac",
+    "release:mac":            "npm run release:prepare && build --dir --x64 --mac",
     "release:linux":          "npm run release:prepare && build --dir --x64 --ia32 --linux",
     "release:win":            "npm run release:prepare && build --dir --x64 --ia32 --win"
   },

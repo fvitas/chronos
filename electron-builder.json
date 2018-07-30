@@ -16,13 +16,12 @@
     "compression": "maximum"
   },
   "linux": {
-    "target": ["deb", "AppImage"],
+    "target": ["deb", "AppImage", "snap"],
     "executableName": "${name}-${arch}.${ext}",
-    "description": "",
-    "synopsis": "",
+    "description": "If you have a meeting, greek god (Chronos) will remind you.",
     "maintainer": "Filip Vitas <filip.vitas.dev@gmail.com>",
-    "category": "",
-    "packageCategory": ""
+    "category": "Utility",
+    "packageCategory": "Utility"
   },
   "win": {
     "target": ["nsis", "portable"],
